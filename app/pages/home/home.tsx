@@ -41,11 +41,13 @@ import {
   BalanceCard,
 } from '@components/home';
 import { HomeLayout } from './home-layout';
+import { useBalance } from '../../hooks/use-balance';
 
 export const Home: FC = () => {
   const dispatch = useDispatch();
 
   const { delegated: isDelegated } = useDelegationStatus();
+  const { availableBalance } = useBalance();
 
   const {
     address,
@@ -114,7 +116,7 @@ export const Home: FC = () => {
     <BalanceCard
       address={address}
       lockedStx={balance?.locked}
-      balance={balance?.balance || null}
+      balance={availableBalance.toString() || null}
       onSelectSend={() => dispatch(homeActions.openTxModal())}
       onSelectReceive={() => dispatch(homeActions.openReceiveModal())}
       onRequestTestnetStx={async ({ stacking }) =>

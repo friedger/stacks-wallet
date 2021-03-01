@@ -99,6 +99,7 @@ export const App: FC = ({ children }) => {
       client = await connectWebSocketClient(urljoin(wsUrl.toString(), 'extended', 'v1', 'ws'));
       if (!address) return;
       await client.subscribeAddressBalanceUpdates(address, ({ address, balance }) => {
+        console.log({ address, balance });
         dispatch(updateAddressBalance({ address, balance }));
       });
       await client.subscribeAddressTransactions(address, async ({ tx_id }) => {
